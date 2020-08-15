@@ -1,0 +1,21 @@
+apply plugin: 'kotlin'
+apply plugin: 'KotlinLibraryPlugin'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'MavenPublishPlugin'
+apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'DetektConfigPlugin'
+apply plugin: 'librarian'
+apply plugin: 'librarian-preset'
+
+librarian {
+    pages {
+        "pipe-core-usings" {
+            title = "pipe-core's using libraries"
+            description = "This list is including binary"
+            configurations {
+                contain { value = ["implementationDependenciesMetadata"] }
+            }
+        }
+    }
+}
