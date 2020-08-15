@@ -1,3 +1,4 @@
+include ':pipe-adapter'
 include ':pipe-core'
 include ':dependencies'
 include ':sample'
