@@ -138,8 +138,15 @@ class CombinePipe<T : IPipeItem>(
                 combinedPipe.move(fromPosition, toPosition)
             }
             is PipeEvent.Reset -> {
-                combinedIndexed.clear()
-                combinedPipe.clear()
+                val removalIndices = combinedIndexed.asSequence()
+                    .mapIndexed { index, pair -> Pair(index, pair) }
+                    .filter { it.second.first == pipe }
+                    .map { it.first }
+                    .toList()
+                    .asReversed()
+
+                removalIndices.forEach { combinedIndexed.removeAt(it) }
+                combinedPipe.removeAll { index, _ -> removalIndices.contains(index) }
             }
         }
     }
