@@ -1,2 +1,3 @@
-include ':app'
+include ':dependencies'
+include ':sample'
 rootProject.name = "recyclerview-pipe"
