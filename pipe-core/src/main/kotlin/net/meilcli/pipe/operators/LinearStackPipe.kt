@@ -4,11 +4,12 @@ import net.meilcli.pipe.INotifyPipeChanged
 import net.meilcli.pipe.IPipe
 import net.meilcli.pipe.IPipeItem
 import net.meilcli.pipe.PipeEvent
+import net.meilcli.pipe.internal.INotifyPipeChangedContainer
 
 class LinearStackPipe<T : IPipeItem>(
     private val source1: IPipe<T>,
     private val source2: IPipe<T>
-) : IPipe<T> {
+) : IPipe<T>, INotifyPipeChangedContainer {
 
     private inner class NotifyPipeChanged : INotifyPipeChanged {
 
@@ -19,7 +20,7 @@ class LinearStackPipe<T : IPipeItem>(
         }
     }
 
-    private val eventNotifiers = mutableListOf<INotifyPipeChanged>()
+    override val eventNotifiers = mutableListOf<INotifyPipeChanged>()
 
     override val size: Int
         get() = source1.size + source2.size
@@ -58,23 +59,6 @@ class LinearStackPipe<T : IPipeItem>(
 
     override fun toList(): List<T> {
         return source1.toList() + source2.toList()
-    }
-
-    override fun registerNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged) {
-        if (eventNotifiers.contains(notifyPipeChanged)) {
-            return
-        }
-        eventNotifiers.add(notifyPipeChanged)
-    }
-
-    override fun unregisterNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged) {
-        eventNotifiers.remove(notifyPipeChanged)
-    }
-
-    private fun raiseEvent(event: PipeEvent) {
-        for (eventNotifier in eventNotifiers) {
-            eventNotifier.eventRaised(event)
-        }
     }
 
     private fun eventRaisedBySource1(event: PipeEvent) {

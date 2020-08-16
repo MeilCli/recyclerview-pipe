@@ -1,11 +1,12 @@
 package net.meilcli.pipe.operators
 
 import net.meilcli.pipe.*
+import net.meilcli.pipe.internal.INotifyPipeChangedContainer
 
 class CombinePipe<T : IPipeItem>(
     private val source1: IPipe<T>,
     private val source2: IPipe<T>
-) : IPipe<T> {
+) : IPipe<T>, INotifyPipeChangedContainer {
 
     private inner class NotifyPipeChanged : INotifyPipeChanged {
 
@@ -19,7 +20,8 @@ class CombinePipe<T : IPipeItem>(
 
     private val combinedPipe = MutableListPipe<T>()
     private val combinedIndexed = mutableListOf<Pair<IPipe<T>, Int>>()
-    private val eventNotifiers = mutableListOf<INotifyPipeChanged>()
+
+    override val eventNotifiers = mutableListOf<INotifyPipeChanged>()
 
     override val size: Int
         get() = combinedPipe.size
@@ -42,23 +44,6 @@ class CombinePipe<T : IPipeItem>(
 
     override fun toList(): List<T> {
         return combinedPipe.toList()
-    }
-
-    override fun registerNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged) {
-        if (eventNotifiers.contains(notifyPipeChanged)) {
-            return
-        }
-        eventNotifiers.add(notifyPipeChanged)
-    }
-
-    override fun unregisterNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged) {
-        eventNotifiers.remove(notifyPipeChanged)
-    }
-
-    private fun raiseEvent(event: PipeEvent) {
-        for (eventNotifier in eventNotifiers) {
-            eventNotifier.eventRaised(event)
-        }
     }
 
     private fun eventRaisedBySource(pipe: IPipe<T>, pipeEvent: PipeEvent) {

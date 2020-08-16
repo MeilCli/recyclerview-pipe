@@ -1,13 +1,15 @@
 package net.meilcli.pipe
 
+import net.meilcli.pipe.internal.INotifyPipeChangedContainer
 import net.meilcli.pipe.internal.OperatedIndex
 import net.meilcli.pipe.internal.squashIndices
 import net.meilcli.pipe.internal.squashOperatedIndices
 
-class MutableListPipe<T : IPipeItem> : IMutablePipe<T> {
+class MutableListPipe<T : IPipeItem> : IMutablePipe<T>, INotifyPipeChangedContainer {
 
     private val source = mutableListOf<T>()
-    private val eventNotifiers = mutableListOf<INotifyPipeChanged>()
+
+    override val eventNotifiers = mutableListOf<INotifyPipeChanged>()
 
     override val size: Int
         get() = source.size
@@ -22,12 +24,6 @@ class MutableListPipe<T : IPipeItem> : IMutablePipe<T> {
 
     override fun toList(): List<T> {
         return source
-    }
-
-    private fun raiseEvent(event: PipeEvent) {
-        for (eventNotifier in eventNotifiers) {
-            eventNotifier.eventRaised(event)
-        }
     }
 
     override fun add(element: T) {
@@ -150,16 +146,5 @@ class MutableListPipe<T : IPipeItem> : IMutablePipe<T> {
     override fun clear() {
         source.clear()
         raiseEvent(PipeEvent.Reset(this))
-    }
-
-    override fun registerNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged) {
-        if (eventNotifiers.contains(notifyPipeChanged)) {
-            return
-        }
-        eventNotifiers.add(notifyPipeChanged)
-    }
-
-    override fun unregisterNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged) {
-        eventNotifiers.remove(notifyPipeChanged)
     }
 }

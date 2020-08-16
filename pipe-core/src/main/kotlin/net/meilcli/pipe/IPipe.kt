@@ -1,11 +1,15 @@
 package net.meilcli.pipe
 
-interface IPipe<T : IPipeItem> {
+interface IPipe<T : IPipeItem> : IPipeEventRegistry {
 
     val size: Int
 
     val lastIndex: Int
         get() = size - 1
+
+    fun indices(): IntRange {
+        return 0..lastIndex
+    }
 
     fun isEmpty(): Boolean {
         return size == 0
@@ -24,8 +28,4 @@ interface IPipe<T : IPipeItem> {
     }
 
     fun toList(): List<T>
-
-    fun registerNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged)
-
-    fun unregisterNotifyPipeChanged(notifyPipeChanged: INotifyPipeChanged)
 }

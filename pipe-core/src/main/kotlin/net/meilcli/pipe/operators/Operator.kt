@@ -45,3 +45,10 @@ fun <T : IPipeItem> combine(source1: IPipe<T>, source2: IPipe<T>, source3: IPipe
     return CombinePipe(combine(source1, source2, source3, source4, source5), source6)
 }
 
+fun <T : IPipeItem> IPipe<T>.take(count: Int): IPipe<T> {
+    return TakePipe(this, count)
+}
+
+fun <T : IPipeItem> IPipe<T>.skip(count: Int): IPipe<T> {
+    return SkipPipe(this, count)
+}

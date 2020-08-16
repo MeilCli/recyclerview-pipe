@@ -18,6 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Color Scene" />
+
+        <Button
+            android:id="@+id/insertScene"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insert Scene" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

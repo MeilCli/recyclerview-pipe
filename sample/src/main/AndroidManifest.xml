@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".scenes.color.ColorSceneActivity" />
+        <activity android:name=".scenes.insert.InsertSceneActivity" />
     </application>
 
 </manifest>
