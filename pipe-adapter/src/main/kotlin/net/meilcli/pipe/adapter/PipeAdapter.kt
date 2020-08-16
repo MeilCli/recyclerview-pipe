@@ -28,7 +28,7 @@ open class PipeAdapter<TViewHolder, TItem : IPipeItem>(
         return source[index]
     }
 
-    override fun indexOf(element: TItem): Int {
+    override fun indexOf(element: IPipeItem): Int {
         return source.indexOf(element)
     }
 

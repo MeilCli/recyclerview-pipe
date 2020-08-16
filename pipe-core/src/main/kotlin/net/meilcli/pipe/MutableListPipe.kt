@@ -18,7 +18,7 @@ class MutableListPipe<T : IPipeItem> : IMutablePipe<T>, INotifyPipeChangedContai
         return source[index]
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         return source.indexOf(element)
     }
 

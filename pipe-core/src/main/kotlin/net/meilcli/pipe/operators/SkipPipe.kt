@@ -45,7 +45,7 @@ class SkipPipe<T : IPipeItem>(
         return source[index + count]
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         val index = source.indexOf(element)
         return min(index - count, -1)
     }

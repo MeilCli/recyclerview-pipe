@@ -46,7 +46,7 @@ class LinearStackPipe<T : IPipeItem>(
         }
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         var index = source1.indexOf(element)
         if (index < 0) {
             index = source2.indexOf(element)

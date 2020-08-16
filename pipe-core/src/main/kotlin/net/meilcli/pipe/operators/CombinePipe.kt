@@ -61,7 +61,7 @@ class CombinePipe<T : IPipeItem>(
         return combinedPipe[index].item
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         for (i in indices()) {
             if (combinedPipe[i].item == element) {
                 return i

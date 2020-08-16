@@ -44,7 +44,7 @@ class TakePipe<T : IPipeItem>(
         return source[index]
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         val index = source.indexOf(element)
         if (index !in 0 until size) {
             return -1

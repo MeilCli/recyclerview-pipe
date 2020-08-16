@@ -9,7 +9,7 @@ class EmptyPipe<T : IPipeItem> : IPipe<T> {
         throw UnsupportedOperationException()
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         return -1
     }
 

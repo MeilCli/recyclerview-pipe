@@ -105,7 +105,7 @@ class InsertPipe<T : IPipeItem>(
         return insertedPipe[index].item
     }
 
-    override fun indexOf(element: T): Int {
+    override fun indexOf(element: IPipeItem): Int {
         for (i in indices()) {
             if (insertedPipe[i].item == element) {
                 return i

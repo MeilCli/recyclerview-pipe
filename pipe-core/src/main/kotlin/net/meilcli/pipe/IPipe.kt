@@ -1,6 +1,6 @@
 package net.meilcli.pipe
 
-interface IPipe<T : IPipeItem> : IPipeEventRegistry {
+interface IPipe<out T : IPipeItem> : IPipeEventRegistry {
 
     val size: Int
 
@@ -25,9 +25,9 @@ interface IPipe<T : IPipeItem> : IPipeEventRegistry {
         return toList().slice(indexRange)
     }
 
-    fun indexOf(element: T): Int
+    fun indexOf(element: IPipeItem): Int
 
-    fun contains(element: T): Boolean {
+    fun contains(element: IPipeItem): Boolean {
         return indexOf(element) < 0
     }
 

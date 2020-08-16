@@ -19,6 +19,7 @@
         <activity android:name=".scenes.color.ColorSceneActivity" />
         <activity android:name=".scenes.insert.InsertSceneActivity" />
         <activity android:name=".scenes.every.EverySceneActivity" />
+        <activity android:name=".scenes.multi.MultiSceneActivity" />
     </application>
 
 </manifest>
