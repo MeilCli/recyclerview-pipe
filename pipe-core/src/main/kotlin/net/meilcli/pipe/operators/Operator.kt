@@ -74,3 +74,14 @@ fun <T : IPipeItem> IPipe<T>.take(count: Int): IPipe<T> {
 fun <T : IPipeItem> IPipe<T>.skip(count: Int): IPipe<T> {
     return SkipPipe(this, count)
 }
+
+fun <T : IPipeItem> IPipe<T>.insertAt(pipe: IPipe<T>, index: Int, insertStrategy: InsertStrategy = InsertStrategy.Start): IPipe<T> {
+    return InsertPipe(this, pipe, { it == index }, insertStrategy)
+}
+
+fun <T : IPipeItem> IPipe<T>.insertEveryAt(pipe: IPipe<T>, every: Int, insertStrategy: InsertStrategy = InsertStrategy.Start): IPipe<T> {
+    if (every < 1) {
+        throw IllegalArgumentException("every must over 0")
+    }
+    return InsertPipe(this, pipe, { it % every == 0 }, insertStrategy)
+}

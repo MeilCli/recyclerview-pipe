@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import net.meilcli.pipe.sample.scenes.color.ColorSceneActivity
+import net.meilcli.pipe.sample.scenes.every.EverySceneActivity
 import net.meilcli.pipe.sample.scenes.insert.InsertSceneActivity
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         }
         insertScene.setOnClickListener {
             startActivity(Intent(this, InsertSceneActivity::class.java))
+        }
+        everyScene.setOnClickListener {
+            startActivity(Intent(this, EverySceneActivity::class.java))
         }
     }
 }
