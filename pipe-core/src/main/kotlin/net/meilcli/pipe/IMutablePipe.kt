@@ -8,6 +8,8 @@ interface IMutablePipe<T : IPipeItem> : IPipe<T> {
 
     fun addAll(elements: Collection<T>)
 
+    fun addAll(index: Int, elements: Collection<T>)
+
     fun remove(element: T)
 
     fun removeAt(index: Int)

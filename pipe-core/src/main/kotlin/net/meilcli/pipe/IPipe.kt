@@ -21,6 +21,10 @@ interface IPipe<T : IPipeItem> : IPipeEventRegistry {
 
     operator fun get(index: Int): T
 
+    operator fun get(indexRange: IntRange): List<T> {
+        return toList().slice(indexRange)
+    }
+
     fun indexOf(element: T): Int
 
     fun contains(element: T): Boolean {

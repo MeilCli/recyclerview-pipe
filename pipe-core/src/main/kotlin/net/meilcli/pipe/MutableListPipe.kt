@@ -37,15 +37,18 @@ class MutableListPipe<T : IPipeItem> : IMutablePipe<T>, INotifyPipeChangedContai
     }
 
     override fun addAll(elements: Collection<T>) {
+        addAll(source.size, elements)
+    }
+
+    override fun addAll(index: Int, elements: Collection<T>) {
         if (elements.isEmpty()) {
             return
         }
-        val startIndex = source.size
-        source.addAll(elements)
+        source.addAll(index, elements)
         if (elements.size == 1) {
-            raiseEvent(PipeEvent.Added(this, startIndex))
+            raiseEvent(PipeEvent.Added(this, index))
         } else {
-            raiseEvent(PipeEvent.RangeAdded(this, startIndex, elements.size))
+            raiseEvent(PipeEvent.RangeAdded(this, index, elements.size))
         }
     }
 
