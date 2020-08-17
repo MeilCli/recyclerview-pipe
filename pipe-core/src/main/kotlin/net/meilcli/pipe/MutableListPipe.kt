@@ -5,7 +5,7 @@ import net.meilcli.pipe.internal.OperatedIndex
 import net.meilcli.pipe.internal.squashIndices
 import net.meilcli.pipe.internal.squashOperatedIndices
 
-class MutableListPipe<T : IPipeItem> : IMutablePipe<T>, INotifyPipeChangedContainer {
+class MutableListPipe<T : IPipeItem> : IMutableListPipe<T>, INotifyPipeChangedContainer {
 
     private val source = mutableListOf<T>()
 

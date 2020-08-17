@@ -1,6 +1,6 @@
 package net.meilcli.pipe
 
-interface IMutablePipe<T : IPipeItem> : IPipe<T> {
+interface IMutableListPipe<T : IPipeItem> : IPipe<T> {
 
     fun add(element: T)
 
