@@ -66,9 +66,14 @@ open class PipeAdapter<TViewHolder, TItem : IPipeItem>(
     }
 
     override fun onBindViewHolder(holder: TViewHolder, position: Int) {
+        // called after onBindViewHolder(holder, position, payloads)
+    }
+
+    override fun onBindViewHolder(holder: TViewHolder, position: Int, payloads: MutableList<Any>) {
+        super.onBindViewHolder(holder, position, payloads)
         val item = source[position]
         val argument = pipeAdapterArgumentProvider.provide(position, item)
-        holder.bind(item, argument)
+        holder.bind(item, argument, payloads)
     }
 
     override fun onViewRecycled(holder: TViewHolder) {
@@ -98,8 +103,12 @@ open class PipeAdapter<TViewHolder, TItem : IPipeItem>(
         when (event) {
             is PipeEvent.Added -> notifyItemInserted(event.index)
             is PipeEvent.RangeAdded -> notifyItemRangeInserted(event.startIndex, event.count)
-            is PipeEvent.Changed -> notifyItemChanged(event.index)
-            is PipeEvent.RangeChanged -> notifyItemRangeChanged(event.startIndex, event.count)
+            is PipeEvent.Changed -> if (event.payload == null) notifyItemChanged(event.index) else notifyItemChanged(event.index, event.payload)
+            is PipeEvent.RangeChanged -> if (event.payload == null) {
+                notifyItemRangeChanged(event.startIndex, event.count)
+            } else {
+                notifyItemRangeChanged(event.startIndex, event.count, event.payload)
+            }
             is PipeEvent.Removed -> notifyItemRemoved(event.index)
             is PipeEvent.RangeRemoved -> notifyItemRangeRemoved(event.startIndex, event.count)
             is PipeEvent.Moved -> notifyItemMoved(event.fromIndex, event.toIndex)

@@ -48,17 +48,22 @@ internal fun squashOperatedIndices(indices: List<OperatedIndex>): List<OperatedI
     var i = 0
     var operate = indices[i].operate
     var startIndex = indices[i].index
+    var payload = indices[i].payload
     var size = 1
     while (i < indices.size) {
         if (i + 1 == indices.size) {
-            result += OperatedIndex(startIndex, operate, size)
+            result += OperatedIndex(startIndex, operate, size, payload)
             break
         }
-        if (indices[i].index + direction != indices[i + 1].index || indices[i].operate != indices[i + 1].operate) {
-            result += OperatedIndex(startIndex, operate, size)
+        if (indices[i].index + direction != indices[i + 1].index ||
+            indices[i].operate != indices[i + 1].operate ||
+            indices[i].payload != indices[i + 1].payload
+        ) {
+            result += OperatedIndex(startIndex, operate, size, payload)
             i += 1
             operate = indices[i].operate
             startIndex = indices[i].index
+            payload = indices[i].payload
             size = 1
             continue
         }

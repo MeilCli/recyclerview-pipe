@@ -4,19 +4,19 @@ sealed class PipeEvent(val sender: IPipe<*>) {
 
     abstract fun clone(sender: IPipe<*>): PipeEvent
 
-    class Changed(sender: IPipe<*>, val index: Int) : PipeEvent(sender) {
+    class Changed(sender: IPipe<*>, val index: Int, val payload: Any? = null) : PipeEvent(sender) {
 
         override fun clone(sender: IPipe<*>): PipeEvent {
-            return Changed(sender, index)
+            return Changed(sender, index, payload)
         }
     }
 
-    class RangeChanged(sender: IPipe<*>, val startIndex: Int, val count: Int) : PipeEvent(sender) {
+    class RangeChanged(sender: IPipe<*>, val startIndex: Int, val count: Int, val payload: Any? = null) : PipeEvent(sender) {
 
         val range: IntRange = startIndex..(startIndex + count)
 
         override fun clone(sender: IPipe<*>): PipeEvent {
-            return RangeChanged(sender, startIndex, count)
+            return RangeChanged(sender, startIndex, count, payload)
         }
     }
 

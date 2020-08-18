@@ -158,4 +158,26 @@ internal class SquashIndicesTest {
             )
         )
     }
+
+    @Test
+    fun testSquashOperatedIndicesWithPayload() {
+        fun assert(indices: List<OperatedIndex>, expect: List<OperatedIndex>) {
+            assertIterableEquals(expect, squashOperatedIndices(indices))
+        }
+
+        assert(
+            listOf(
+                OperatedIndex(1, OperatedIndex.Operate.Change, payload = null),
+                OperatedIndex(2, OperatedIndex.Operate.Change, payload = null),
+                OperatedIndex(3, OperatedIndex.Operate.Change, payload = "a"),
+                OperatedIndex(4, OperatedIndex.Operate.Change, payload = "b"),
+                OperatedIndex(5, OperatedIndex.Operate.Change, payload = "b")
+            ),
+            listOf(
+                OperatedIndex(1, OperatedIndex.Operate.Change, payload = null, size = 2),
+                OperatedIndex(3, OperatedIndex.Operate.Change, payload = "a", size = 1),
+                OperatedIndex(4, OperatedIndex.Operate.Change, payload = "b", size = 2)
+            )
+        )
+    }
 }

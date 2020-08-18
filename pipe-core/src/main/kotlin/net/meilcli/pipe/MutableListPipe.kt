@@ -99,18 +99,22 @@ class MutableListPipe<T : IPipeItem> : IMutableListPipe<T>, INotifyPipeChangedCo
             return
         }
         source[index] = element
-        raiseEvent(PipeEvent.Changed(this, index))
+        raiseEvent(PipeEvent.Changed(this, index, old.getPayload(element)))
     }
 
     override fun changeAll(selector: (Int, T) -> T) {
         val changes = source.asSequence()
             .mapIndexed { index, item -> Pair(index, selector(index, item)) }
-            .filter { source[it.first].areItemsTheSame(it.second) && source[it.first].areContentsTheSame(it.second) }
+            .filter {
+                val old = source[it.first]
+                old.areItemsTheSame(it.second) && old.areContentsTheSame(it.second)
+            }
             .map {
-                if (source[it.first].areItemsTheSame(it.second)) {
+                val old = source[it.first]
+                if (old.areItemsTheSame(it.second)) {
                     Pair(OperatedIndex(it.first, OperatedIndex.Operate.Set), it.second)
                 } else {
-                    Pair(OperatedIndex(it.first, OperatedIndex.Operate.Change), it.second)
+                    Pair(OperatedIndex(it.first, OperatedIndex.Operate.Change, payload = old.getPayload(it.second)), it.second)
                 }
             }
             .toList()
@@ -126,14 +130,14 @@ class MutableListPipe<T : IPipeItem> : IMutableListPipe<T>, INotifyPipeChangedCo
                     raiseEvent(PipeEvent.Added(this, squashedIndex.index))
                     raiseEvent(PipeEvent.Removed(this, squashedIndex.index))
                 } else {
-                    raiseEvent(PipeEvent.Changed(this, squashedIndex.index))
+                    raiseEvent(PipeEvent.Changed(this, squashedIndex.index, squashedIndex.payload))
                 }
             } else {
                 if (squashedIndex.operate == OperatedIndex.Operate.Set) {
                     raiseEvent(PipeEvent.RangeAdded(this, squashedIndex.index, squashedIndex.size))
                     raiseEvent(PipeEvent.RangeRemoved(this, squashedIndex.index, squashedIndex.size))
                 } else {
-                    raiseEvent(PipeEvent.RangeChanged(this, squashedIndex.index, squashedIndex.size))
+                    raiseEvent(PipeEvent.RangeChanged(this, squashedIndex.index, squashedIndex.size, squashedIndex.payload))
                 }
             }
         }

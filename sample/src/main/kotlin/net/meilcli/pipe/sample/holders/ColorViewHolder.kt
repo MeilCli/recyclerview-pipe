@@ -13,8 +13,8 @@ class ColorViewHolder(parent: ViewGroup) : PipeViewHolder<ColorItem>(LayoutInfla
 
     private val view: TextView = itemView.view
 
-    override fun bind(item: ColorItem, argument: IPipeAdapterArgument) {
-        super.bind(item, argument)
+    override fun bind(item: ColorItem, argument: IPipeAdapterArgument, payloads: List<Any>) {
+        super.bind(item, argument, payloads)
         view.setBackgroundColor(item.color)
         when (val number = item.number) {
             null -> view.text = ""

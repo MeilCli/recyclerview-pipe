@@ -9,4 +9,8 @@ interface IPipeItem {
     fun areContentsTheSame(other: IPipeItem): Boolean {
         return this == other
     }
+
+    fun getPayload(newItem: IPipeItem): Any? {
+        return null
+    }
 }

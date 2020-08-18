@@ -13,8 +13,8 @@ class TextViewHolder(parent: ViewGroup) : PipeViewHolder<TextItem>(LayoutInflate
 
     private val view: TextView = itemView.view
 
-    override fun bind(item: TextItem, argument: IPipeAdapterArgument) {
-        super.bind(item, argument)
+    override fun bind(item: TextItem, argument: IPipeAdapterArgument, payloads: List<Any>) {
+        super.bind(item, argument, payloads)
         view.text = item.text
     }
 }

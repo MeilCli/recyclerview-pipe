@@ -6,7 +6,7 @@ interface IPipeViewHolder<in T : IPipeItem> {
 
     fun initialize() {}
 
-    fun bind(item: T, argument: IPipeAdapterArgument) {}
+    fun bind(item: T, argument: IPipeAdapterArgument, payloads: List<Any>) {}
 
     fun unbind() {}
 }
